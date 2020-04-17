@@ -88,3 +88,11 @@ On the example above, we have 4 items to process, each item need 1 second to pro
 
 #### map(collections, concurrencyLevel, func)
 #### batch(maxItemsPerBatch, delayMilliseconds, func)
+
+
+[npm]: https://img.shields.io/npm/v/@subiz/flow.svg
+[npm-url]: https://npmjs.com/package/@subiz/flow
+[deps]: https://david-dm.org/@subiz/flow.svg
+[deps-url]: https://david-dm.org/@subiz/flow
+[size]: https://packagephobia.now.sh/badge?p=@subiz/flow
+[size-url]: https://packagephobia.now.sh/result?p=@subiz/flow
