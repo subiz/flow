@@ -1,0 +1,31 @@
+{
+	"name": "@subiz/flow",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "npx webpack",
+		"test": "tape"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/subiz/flow.git"
+	},
+	"keywords": [
+		"async"
+	],
+	"author": "Subiz",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/subiz/flow/issues"
+	},
+	"homepage": "https://github.com/subiz/flow#readme",
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"uglifyjs-webpack-plugin": "^2.2.0",
+		"webpack": "^4.41.6",
+		"webpack-cli": "^3.3.11",
+		"prettier-eslint-cli": "^5.0.0",
+		"tape": "^4.13.2"
+	}
+}
