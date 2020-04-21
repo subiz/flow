@@ -9,7 +9,7 @@ module.exports = function (maxBatch, maxDelay, handler) {
 
 	var myExecute = function (buffers) {
 		var payloads = buffers.map(function (i) {
-			return i.payloads
+			return i.payload
 		})
 		var pro = handler(payloads)
 		// func return result instead of a promise
