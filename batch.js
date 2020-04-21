@@ -4,18 +4,13 @@ var loop = require('./loop.js')
 // idle => executing
 
 module.exports = function (maxBatch, maxDelay, handler) {
-	var myBuffers = []
-	var myDrainRs = []
+	var myBuffers = [] // job buffers
 	var myState = 'idle'
 
 	var myExecute = function (buffers) {
 		var payloads = buffers.map(function (i) {
 			return i.payloads
 		})
-		var resolves = buffers.map(function (i) {
-			return i.rs
-		})
-
 		var pro = handler(payloads)
 		// func return result instead of a promise
 		// we treat the out put as a promise
@@ -28,9 +23,12 @@ module.exports = function (maxBatch, maxDelay, handler) {
 			}
 		}
 
+		var resolves = buffers.map(function (i) {
+			return i.rs
+		})
 		return new Promise(function (resolve) {
 			pro.then(function (outs) {
-				resolves.map(rs, function (i) {
+				resolves.map(function (rs, i) {
 					rs(outs[i])
 				})
 				resolve()
@@ -43,11 +41,17 @@ module.exports = function (maxBatch, maxDelay, handler) {
 		myState = 'executing'
 
 		loop(function () {
-			if (myBuffers.length >= maxBatch) return false
-			var buffers = myBuffers.splice(0, maxBatch)
-			return myExecute(buffers)
+			if (myBuffers.length <= maxBatch) return Promise.resolve(false)
+			var buffers = myBuffers.splice(0, maxBatch) // myBuffers would also be trimmed
+			return myExecute(buffers).then(function () {
+				return true // continue loop
+			})
 		}).then(function () {
-			if (myBuffers.length === 0) return myIdle()
+			if (myBuffers.length === 0) {
+				myState = 'idle'
+				return
+			}
+
 			// last batch
 			var nextms = maxDelay - (Date.now() - myBuffers[0].created)
 			if (nextms >= 1) {
@@ -55,46 +59,28 @@ module.exports = function (maxBatch, maxDelay, handler) {
 				// the settedTimeout property will make sure that we won't
 				// set multiple timeouts for this one
 				myState = 'idle'
+
 				if (myBuffers[0].settedTimeout) return
 				myBuffers[0].settedTimeout = true
 				setTimeout(myFlush, nextms)
 				return
 			}
 
-			// have to execute the buffers now regardless of there is only few item
+			// have to execute remaining items
 			var buffers = myBuffers
 			myBuffers = []
 			myExecute(buffers).then(function () {
+				// myBuffers may have been added new item, must check after executed the last batch
 				myState = 'idle'
 				myFlush()
 			})
 		})
 	}
 
-	var myIdle = function () {
-		myState = 'idle'
-		myDrainRs.map(function (rs) {
-			rs()
-		})
-		myDrainRs = []
-	}
-
 	this.push = function (payload, priority) {
-		var rs
-		var promise = new Promise(function (resolve) {
-			resolve = rs
-		})
-
-		myBuffers.push({ payload: payload, priority: priority, created: Date.now(), rs: rs })
-		myFlush()
-
-		return promise
-	}
-
-	this.drain = function () {
-		return new Promise(function (rs) {
-			if (myBuffers.length === 0) return rs()
-			myDrainRs.push(rs)
+		return new Promise(function (resolve) {
+			myBuffers.push({ payload: payload, priority: priority, created: Date.now(), rs: resolve })
+			myFlush()
 		})
 	}
 
