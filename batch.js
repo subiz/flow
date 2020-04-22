@@ -29,7 +29,7 @@ module.exports = function (maxBatch, maxDelay, handler) {
 		return new Promise(function (resolve) {
 			pro.then(function (outs) {
 				resolves.map(function (rs, i) {
-					rs(outs[i])
+					rs(outs && outs[i])
 				})
 				resolve()
 			})
