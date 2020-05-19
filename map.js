@@ -9,6 +9,7 @@ module.exports = function (collections, limit, func) {
 
 	// normalize limit
 	if (limit <= 0) limit = 1
+	if (Object.keys(ins).length === 0) return Promise.resolve([])
 	if (Object.keys(ins).length < limit) limit = Object.keys(ins).length
 
 	var outs = {} // outputs
