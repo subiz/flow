@@ -6,7 +6,12 @@ var asyncMap = require('./map.js')
 test('sync map', async t => {
 	// sync one by one
 	let outs = await asyncMap([1, 2, 3, 4], 1, i => i * 2)
+	t.equal(outs[0], 2)
+	t.equal(outs[1], 4)
+	t.equal(outs[2], 6)
+	t.equal(outs[3], 8)
 
+	outs = await asyncMap([1, 2, 3, 4], i => i * 2)
 	t.equal(outs[0], 2)
 	t.equal(outs[1], 4)
 	t.equal(outs[2], 6)
@@ -33,7 +38,7 @@ test('sync map', async t => {
 
 test('sequence async map', async t => {
 	let outs = await asyncMap([1, 2, 3, 4], 1, async i => {
-		await sleep(10)
+		if (i % 2 === 0) await sleep(10)
 		return i * 2
 	})
 

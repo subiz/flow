@@ -14,14 +14,7 @@ module.exports = function (maxBatch, maxDelay, handler) {
 		var pro = handler(payloads)
 		// func return result instead of a promise
 		// we treat the out put as a promise
-		if (!pro.then) {
-			var outs = pro
-			pro = {
-				then: function (f) {
-					return f(outs)
-				},
-			}
-		}
+		if (!pro.then) pro = Promise.resolve(pro)
 
 		var resolves = buffers.map(function (i) {
 			return i.rs

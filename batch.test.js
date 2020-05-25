@@ -4,9 +4,9 @@ var asyncMap = require('./map.js')
 var co = require('./common.js')
 var sleep = require('./sleep.js')
 
-test('window should execute', t => {
-	let bat = new Batch(20, 200, async (is) => {
-		let outs = await asyncMap(is, 2,  async i => {
+test('window should execute', async t => {
+	let bat = new Batch(20, 200, async is => {
+		let outs = await asyncMap(is, 2, async i => {
 			await sleep(20)
 			return i * 2
 		})
