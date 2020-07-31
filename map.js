@@ -31,7 +31,7 @@ module.exports = function (collections, limit, func) {
 			var pro = func(value, key)
 			// func return result instead of a promise
 			// we treat the out put as a promise
-			if (!pro.then) pro = Promise.resolve(pro)
+			if (!pro || !pro.then) pro = Promise.resolve(pro)
 
 			pro.then(function (ret) {
 				outs[key] = ret
