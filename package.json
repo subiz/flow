@@ -1,6 +1,6 @@
 {
 	"name": "@subiz/flow",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -20,8 +20,6 @@
 	},
 	"homepage": "https://github.com/subiz/flow#readme",
 	"devDependencies": {
-		"eslint": "^7.9.0",
-		"prettier-eslint-cli": "^5.0.0",
-		"tape": "^5.0.1"
+		"tape": "^5.2.2"
 	}
 }
