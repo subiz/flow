@@ -1,7 +1,7 @@
 var test = require('tape')
 var co = require('./common.js')
 var sleep = require('./sleep.js')
-var loop = require('./loop.js')
+var loop/ = require('./loop.js')
 
 test('loop async', async t => {
 	var i = 0

@@ -69,10 +69,10 @@ Map is like js `array.prototype.map` but run concurrently.
 ```js
 var flow = require('@subiz/flow')
 
-outs = await flow.map([1, 2, 3, 4], 2, async i => {
+outs = await flow.map([1, 2, 3, 4], async i => {
    	await flow.sleep(1000)
    	return i * 2
-})
+}, 2)
 
 // after 2 seconds
 console.log(outs) // [2, 4, 6, 8]
@@ -86,7 +86,7 @@ On the example above, we have 4 items to process, each item need 1 second to pro
 #### sleep(ms)
 #### loop(func)
 
-#### map(collections, concurrencyLevel, func)
+#### map(collections, func, concurrencyLevel)
 #### batch(maxItemsPerBatch, delayMilliseconds, func)
 
 
