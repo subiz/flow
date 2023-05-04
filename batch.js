@@ -72,7 +72,7 @@ module.exports = function (maxBatch, maxDelay, handler) {
 
 	this.push = function (payload, priority) {
 		return new Promise(function (resolve) {
-			myBuffers.push({ payload: payload, priority: priority, created: Date.now(), rs: resolve })
+			myBuffers.push({payload: payload, priority: priority, created: Date.now(), rs: resolve})
 			myFlush()
 		})
 	}

@@ -1,9 +1,9 @@
 var test = require('tape')
 var co = require('./common.js')
 var sleep = require('./sleep.js')
-var loop/ = require('./loop.js')
+var loop = require('./loop.js')
 
-test('loop async', async t => {
+test('loop async', async (t) => {
 	var i = 0
 	var n = 0
 	await loop(async () => {
@@ -28,7 +28,7 @@ test('loop async', async t => {
 	t.end()
 })
 
-test('loop sync', async t => {
+test('loop sync', async (t) => {
 	var i = 0
 	var n = 0
 	await loop(() => {

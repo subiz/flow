@@ -24,3 +24,14 @@ test('window should execute', async (t) => {
 	for (var i = 0; i < 1000; i++) t.equal(outs[i], i * 2)
 	t.end()
 })
+
+test('async execute', async (t) => {
+	let bat = new Batch(20, 200, async (is) => {
+		await sleep(2000)
+		console.log('AAAAAAAAA')
+	})
+
+	await bat.push(20)
+	console.log('BBBBBBB')
+	t.end()
+})

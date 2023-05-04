@@ -1,4 +1,4 @@
-function map (collection, predicate) {
+function map(collection, predicate) {
 	if (!collection) return []
 	if (!predicate) {
 		predicate = function (a) {
@@ -26,4 +26,4 @@ function map (collection, predicate) {
 	return out
 }
 
-module.exports = { map: map }
+module.exports = {map: map}
